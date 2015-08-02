@@ -232,7 +232,11 @@ def isreal(x):
     array([False,  True,  True,  True,  True, False], dtype=bool)
 
     """
-    return imag(x) == 0
+    ax = asanyarray(x)
+    if issubclass(ax.dtype.type, _nx.complexfloating):
+        return ax.imag == 0
+    res = zeros(ax.shape, bool)
+    return +res  # convet to array-scalar if needed
 
 def iscomplexobj(x):
     """
